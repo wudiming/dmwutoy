@@ -6,7 +6,7 @@ on:
   workflow_dispatch: # 允许在 Actions 页面手动点击运行
 
 env:
-  IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/iventoy
+  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/iventoy
 
 jobs:
   check-and-build:
