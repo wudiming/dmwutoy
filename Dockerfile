@@ -17,13 +17,16 @@ RUN wget https://github.com/ventoy/PXE/releases/download/v${IVENTOY_VERSION}/ive
     mv iventoy-${IVENTOY_VERSION}/* . && \
     rm -rf iventoy-${IVENTOY_VERSION} iventoy.tar.gz
 
+# 【新增关键步骤】：将自带的 data 目录备份一份
+RUN cp -r data data_template
+
 COPY entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
-# 挂载关键目录：ISO镜像、数据配置、日志
+# 挂载关键目录
 VOLUME ["/app/iso", "/app/data", "/app/log"]
 
-# 暴露端口: 26000(Web UI), 16000(内部RPC), 67(DHCP), 69(TFTP), 10809(HTTP)
+# 暴露端口
 EXPOSE 26000 16000 67/udp 69/udp 10809
 
 ENTRYPOINT ["/app/entrypoint.sh"]
