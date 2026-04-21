@@ -2,7 +2,7 @@ name: Auto Build iVentoy Docker Image
 
 on:
   schedule:
-    - cron: '0 2 * * 1' # 每周一凌晨 2:00 运行 (UTC时间)
+    - cron: '0 2 * * 3' # 每周一凌晨 2:00 运行 (UTC时间)
   workflow_dispatch: # 允许在 Actions 页面手动点击运行
 
 env:
