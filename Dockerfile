@@ -11,13 +11,13 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-# 根据传入的版本号下载对应的 Release 包
-RUN wget https://github.com/ventoy/PXE/releases/download/v${IVENTOY_VERSION}/iventoy-${IVENTOY_VERSION}-linux-free.tar.gz -O iventoy.tar.gz && \
-    tar -xzf iventoy.tar.gz && \
-    mv iventoy-${IVENTOY_VERSION}/* . && \
-    rm -rf iventoy-${IVENTOY_VERSION} iventoy.tar.gz
+# 注意：从 1.0.27 版本开始，官方包名增加了 -x86_64 标识
+# 使用 --strip-components=1 直接将内容解压到当前 /app 目录，省去 mv 操作
+RUN wget https://github.com/ventoy/PXE/releases/download/v${IVENTOY_VERSION}/iventoy-${IVENTOY_VERSION}-linux-x86_64-free.tar.gz -O iventoy.tar.gz && \
+    tar -xzf iventoy.tar.gz --strip-components=1 && \
+    rm -rf iventoy.tar.gz
 
-# 【新增关键步骤】：将自带的 data 目录备份一份
+# 将自带的 data 目录备份一份，用于首次启动时填充配置
 RUN cp -r data data_template
 
 COPY entrypoint.sh /app/entrypoint.sh
